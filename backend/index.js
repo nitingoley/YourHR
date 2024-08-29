@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Route for signup
-app.post("/api/v3/signup", upload.single("resume"), async (req, res) => {
+app.post("/", upload.single("resume"), async (req, res) => {
   const { name, email } = req.body;
   const resume = req.file ? req.file.path : null; // Ensure resume is available
   try {
