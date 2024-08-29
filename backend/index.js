@@ -11,17 +11,28 @@ const PORT = process.env.PORT || 4000;
 // Middleware configuration
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// CORS configuration
 app.use(cors({
   origin: "https://your-hr-frontend-rouge.vercel.app",
-})); // CORS should be before defining routes
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
 
 // Connect to database
 ConnectDB();
 
 // Upload configuration
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, "uploads")),
-  filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, "uploads");
+    // Ensure directory exists
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`)
 });
 
 const upload = multer({ storage });
@@ -36,14 +47,15 @@ app.post("/", upload.single("resume"), async (req, res) => {
     await user.save();
     res.status(200).send("Signup successful");
   } catch (error) {
-    console.error("Error during signup:", error); // Improved error logging
+    console.error("Error during signup:", error.message); // Improved error logging
     res.status(500).json({ message: "Internal server error" });
   }
 });
 
-app.get("/", (req , res)=>{
- res.send("working") 
-})
+// Health check route
+app.get("/", (req, res) => {
+  res.send("Server is up and running");
+});
 
 // Start the server
 app.listen(PORT, () => {
