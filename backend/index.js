@@ -1,14 +1,12 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const ConnectDB = require("./db/conn");
 const path = require("path");
 const cors = require("cors");
 const multer = require("multer");
 const User = require("./db/model");
 
-dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 4000;
 
 // Middleware configuration
 app.use(express.json());
