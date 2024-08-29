@@ -13,11 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
-app.use(cors({
-  origin: "https://your-hr-frontend-rouge.vercel.app",
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"]
-}));
+app.options("*", cors()); // Handle preflight requests
+
 
 // Connect to database
 ConnectDB();
