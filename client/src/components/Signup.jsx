@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -19,12 +20,13 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("https://your-hr-nu.vercel.app", {
-        method: "POST",
-        body: formData,
+      const response = await axios.post("https://your-hr-nu.vercel.app", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         navigate("/success");
       } else {
         alert("Signup failed");
