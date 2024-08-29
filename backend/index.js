@@ -41,6 +41,10 @@ app.post("/", upload.single("resume"), async (req, res) => {
   }
 });
 
+app.get("/", (req , res)=>{
+ res.send("working") 
+})
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
