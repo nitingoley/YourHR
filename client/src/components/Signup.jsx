@@ -20,7 +20,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("https://your-hr-nu.vercel.app", formData, {
+      const response = await axios.post("https://backend-side-eta.vercel.app", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
