@@ -19,7 +19,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("https://your-hr-nu.vercel.app/api/v3/signup", {
+      const response = await fetch("https://your-hr-nu.vercel.app", {
         method: "POST",
         body: formData,
       });
